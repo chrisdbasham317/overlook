@@ -4,8 +4,9 @@ class UserRepo {
     this.currentUser = {};
   }
 
-  findCurrentUser() {
-
+  findCurrentUser(name) {
+    let foundUser = this.users.filter(user => user.name === name);
+    return this.currentUser = foundUser[0];
   }
 
   addNewUser(id, name) {
