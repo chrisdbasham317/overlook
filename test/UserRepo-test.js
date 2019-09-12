@@ -22,4 +22,10 @@ describe('UserRepo', () => {
     users.findCurrentUser('Chadrick Lowe');
     expect(users.currentUser).to.deep.equal({ id: 2, name: "Chadrick Lowe" });
   });
+
+  it('should be able to add a new user, and select them as current user', () => {
+    users.addNewUser('Chris Basham');
+    expect(users.users).to.deep.include({ id: 10, name: 'Chris Basham' });
+    expect(users.currentUser).to.deep.equal({ id: 10, name: 'Chris Basham' });
+  })
 });

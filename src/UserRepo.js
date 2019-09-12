@@ -9,8 +9,11 @@ class UserRepo {
     return this.currentUser = foundUser[0];
   }
 
-  addNewUser(id, name) {
-    
+  addNewUser(newName) {
+    let newId = this.users.sort((userA, userB) => userB.id - userA.id)[0].id + 1;
+    let newUser = { id: newId, name: newName };
+    this.users.push(newUser);
+    this.findCurrentUser(newUser.name);
   }
 }
 
