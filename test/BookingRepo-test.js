@@ -9,7 +9,9 @@ describe('bookingRepo', () => {
   let bookingRepo;
   beforeEach(() => {
     bookingRepo = new BookingRepo(rooms.rooms, bookingData.bookings);
-  })
+    bookingRepo.getReservedRooms('2019/10/29');
+    bookingRepo.getAvailableRooms();
+  });
   
   it('should return true', () => {
     expect(true).to.equal(true);
@@ -24,7 +26,6 @@ describe('bookingRepo', () => {
   });
 
   it('should store what rooms are reserved on a given date', () => {
-    bookingRepo.getReservedRooms('2019/10/29');
     expect(bookingRepo.reservedRooms).to.deep.equal([{
       userID: 7,
       date: "2019/10/29",
@@ -33,12 +34,14 @@ describe('bookingRepo', () => {
       userID: 2,
       date: "2019/10/29",
       roomNumber: 2
-    }])
-  })
+    }]);
+  });
 
   it('should return what rooms are available on a given date', () => {
-    bookingRepo.getReservedRooms('2019/10/29');
-    bookingRepo.getAvailableRooms();
     expect(bookingRepo.availableRooms.length).to.equal(48);
+  });
+
+  it('should calculate what percentage of rooms are occupied on a given date', () => {
+    expect(bookingRepo.calculatePercentBooked()).to.equal('4%');
   })
 });
