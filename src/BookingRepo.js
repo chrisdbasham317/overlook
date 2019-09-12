@@ -33,6 +33,10 @@ class BookingRepo {
     });
     return filteredDates;
   }
+
+  bookRoom(booking) {
+    this.currentBookings.push(booking);
+  }
 }
 
 export default BookingRepo;
