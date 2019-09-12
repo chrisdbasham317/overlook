@@ -21,10 +21,29 @@ class BookingRepo {
   }
 
   findPopularDate() {
+    let filteredDates = this.getBookingDates();
+    let sortedDates = this.sortDescending(filteredDates);
+    return sortedDates[0][0].date;
+  }
+
+  findMostOpenings() {
+    let filteredDates = this.getBookingDates();
+    let sortedDates = this.sortAscending(filteredDates);
+    return sortedDates[0][0].date;
+  }
+
+  getBookingDates() {
     let filteredDates = [];
     this.currentBookings.forEach(booking => filteredDates.push(this.filterByDate(booking.date)))
-    let sortedDates = filteredDates.sort((arr1, arr2) => arr2.length - arr1.length);
-    return sortedDates[0][0].date;
+    return filteredDates;
+  }
+
+  sortAscending(arr) {
+    return arr.sort((arr1, arr2) => arr1.length - arr2.length);
+  };
+
+  sortDescending(arr) {
+    return arr.sort((arr1, arr2) => arr2.length - arr1.length);
   }
 
   filterByDate(date) {

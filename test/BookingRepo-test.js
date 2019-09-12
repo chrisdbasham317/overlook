@@ -49,6 +49,10 @@ describe('bookingRepo', () => {
     expect(bookingRepo.findPopularDate()).to.equal('2019/09/01');
   });
 
+  it('should find the date with the most openings', () => {
+    expect(bookingRepo.findMostOpenings()).to.equal('2019/10/19');
+  });
+
   it('should store new bookings', () => {
     bookingRepo.bookRoom({ userID: 7, date: "2019/10/29", roomNumber: 35 });
     bookingRepo.getReservedRooms('2019/10/29');
