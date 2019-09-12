@@ -43,5 +43,9 @@ describe('bookingRepo', () => {
 
   it('should calculate what percentage of rooms are occupied on a given date', () => {
     expect(bookingRepo.calculatePercentBooked()).to.equal('4%');
+  });
+
+  it('should find the most popular booking date', () => {
+    expect(bookingRepo.findPopularDate()).to.equal('2019/09/01');
   })
 });
