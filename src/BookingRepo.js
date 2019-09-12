@@ -37,6 +37,10 @@ class BookingRepo {
   bookRoom(booking) {
     this.currentBookings.push(booking);
   }
+
+  getUserHistory(id) {
+    return this.currentBookings.filter(booking => booking.userID === id);
+  }
 }
 
 export default BookingRepo;
