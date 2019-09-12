@@ -84,4 +84,8 @@ describe('bookingRepo', () => {
       roomNumber: 14
     }]);
   });
+
+  it('should be able to filter rooms by type', () => {
+    expect(bookingRepo.filterRoomsByType('residential suite').length).to.equal(8);
+  })
 });

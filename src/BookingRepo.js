@@ -63,7 +63,12 @@ class BookingRepo {
   }
 
   getUserHistory(id) {
-    return this.currentBookings.filter(booking => booking.userID === id);
+    let userHistory = this.currentBookings.filter(booking => booking.userID === id);
+    return userHistory !== [] ? userHistory : undefined;
+  }
+
+  filterRoomsByType(type) {
+    return this.availableRooms.filter(room => room.roomType.toUpperCase() === type.toUpperCase());
   }
 }
 
