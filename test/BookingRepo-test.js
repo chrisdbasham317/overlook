@@ -62,6 +62,11 @@ describe('bookingRepo', () => {
     expect(bookingRepo.availableRooms.length).to.equal(47);
   });
 
+  it('should beable to cancel a booking', () => {
+    bookingRepo.cancelBooking(7, '2019/08/02');
+    expect(bookingRepo.currentBookings.length).to.equal(26)
+  })
+
   it('should find a user\'s booking history by id', () => {
     expect(bookingRepo.getUserHistory(4)).to.deep.equal([{
       userID: 4,

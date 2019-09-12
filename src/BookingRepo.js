@@ -57,6 +57,11 @@ class BookingRepo {
     this.currentBookings.push(booking);
   }
 
+  cancelBooking(id, date) {
+    let bookingIndex = this.currentBookings.findIndex(booking => booking.userID === id ? booking.date === date ? booking : undefined : undefined);
+    return bookingIndex ? this.currentBookings.splice(bookingIndex, 1) : undefined;
+  }
+
   getUserHistory(id) {
     return this.currentBookings.filter(booking => booking.userID === id);
   }
