@@ -27,5 +27,10 @@ describe('UserRepo', () => {
     users.addNewUser('Chris Basham');
     expect(users.users).to.deep.include({ id: 10, name: 'Chris Basham' });
     expect(users.currentUser).to.deep.equal({ id: 10, name: 'Chris Basham' });
-  })
+  });
+
+  it('should have a way to show a customer does not exist in the database', () => {
+    users.findCurrentUser('John Smith');
+    expect(users.currentUser).to.equal(undefined);
+  });
 });
