@@ -49,6 +49,10 @@ describe('bookingRepo', () => {
     expect(bookingRepo.findPopularDate()).to.equal('2019/09/01');
   });
 
+  it('should find the date with the most openings', () => {
+    expect(bookingRepo.findMostOpenings()).to.equal('2019/10/19');
+  });
+
   it('should store new bookings', () => {
     bookingRepo.bookRoom({ userID: 7, date: "2019/10/29", roomNumber: 35 });
     bookingRepo.getReservedRooms('2019/10/29');
@@ -57,6 +61,11 @@ describe('bookingRepo', () => {
     expect(bookingRepo.reservedRooms.length).to.equal(3);
     expect(bookingRepo.availableRooms.length).to.equal(47);
   });
+
+  it('should beable to cancel a booking', () => {
+    bookingRepo.cancelBooking(7, '2019/08/02');
+    expect(bookingRepo.currentBookings.length).to.equal(26)
+  })
 
   it('should find a user\'s booking history by id', () => {
     expect(bookingRepo.getUserHistory(4)).to.deep.equal([{
@@ -75,4 +84,8 @@ describe('bookingRepo', () => {
       roomNumber: 14
     }]);
   });
+
+  it('should be able to filter rooms by type', () => {
+    expect(bookingRepo.filterRoomsByType('residential suite').length).to.equal(8);
+  })
 });
