@@ -56,5 +56,23 @@ describe('bookingRepo', () => {
     expect(bookingRepo.currentBookings.length).to.equal(27);
     expect(bookingRepo.reservedRooms.length).to.equal(3);
     expect(bookingRepo.availableRooms.length).to.equal(47);
-  })
+  });
+
+  it('should find a user\'s booking history by id', () => {
+    expect(bookingRepo.getUserHistory(4)).to.deep.equal([{
+      userID: 4,
+      date: "2019/08/28",
+      roomNumber: 13
+    },
+    {
+      userID: 4,
+      date: "2019/08/29",
+      roomNumber: 45
+    },
+    {
+      userID: 4,
+      date: "2019/10/07",
+      roomNumber: 14
+    }]);
+  });
 });
