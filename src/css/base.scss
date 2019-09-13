@@ -10,6 +10,53 @@ body {
   padding: 0;
 }
 
+// Login Modal Styling
+.div--modal-login {
+  background-image: url('https://i.imgur.com/dUlTOrH.jpg');
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  position: fixed;
+  z-index: 1000;
+
+  .form--login {
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+      color: $contrast-font-color;
+      font-size: 80px;
+    }
+
+    .label--login {
+      color: $contrast-font-color;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.75rem;
+      margin-left: 175px;
+    }
+
+    .input--login {
+      align-self: center;
+      font-size: 1.5rem;
+      margin: 10px;
+      min-height: 3vh;
+      min-width: 33vw;
+    }
+
+    .button--login {
+      align-self: center;
+      min-height: 40px;
+      min-width: 33.4vw;
+    }
+  }
+}
+// End Modal Styling
+
 .header {
   background-color: $header-background;
   color: $contrast-font-color;
