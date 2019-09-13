@@ -1,12 +1,68 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <title>Webpack Starter Kit</title>
+    <title>Overlook Hotel</title>
   </head>
   <body>
-    <h1>Webpack Starter Kit</h1>
+    <header class="header header--banner">
+      <h1 class="h1 h1--main-header">OverLook Hotel</h1>
+      <h2 class="h2 h2--main-subheader">Denver's Premier Hotel In LoDo</h2>
+    </header>
+    <nav class="nav nav--tabs">
+      <h1 class="h2 h2--welcome">Welcome</h2>
+      <h2 class="h2 h2--selected-customer">Customer:</h2>
+      <h3 class="h3 h3--date">Today's Date:</h3>
+      <div class="div div--tabs">
+          <ul class="ul ul--tabs">
+            <li class="li li--main">Main</li>
+            <li class="li li--main">Orders</li>
+            <li class="li li--main">Rooms</li>
+            <li class="li li--main">Customer</li>
+          </ul>
+      </div>
+      <main class="main main--content-display">
+        <section class="section section--main-content">
+          <div class="div div--rooms-available">
+            <h2 class="h2 h2--rooms-available">Rooms Available</h2>
+            <p class="p p--rooms-available"></p>
+          </div>
+          <div class="div div--todays-revenue">
+            <h2 class="h2 h2--todays-revenue">Today's Revenue</h2>
+            <p class="p p--todays-revenue"></p>
+          </div>
+          <div class="div div--percent-occupied">
+            <h2 class="h2 h2--percent-occupied">Percent of Rooms Occupied</h2>
+            <p class="p p--percent-occupied"></p>
+          </div>
+        </section>
+        <section class="section section--orders-content">
 
-    <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
+        </section>
+        <section class="section section--rooms-content">
+
+        </section>
+        <section class="section section--customer-content">
+          <div class="div div--customer-search">
+            <h2 class="h2 h2--customer-search">Search for Existing Customer</h2>
+            <form class="form form--search-customer">
+              <label class="label label--search-customer" for="search">User Name</label>
+              <input class="input input--search-customer" type="text" name="search" placeholder="Enter Full Name">
+              <button class="button button--search-customer">Search</button>
+            </form>
+          </div>
+          <div class="div div--new-customer">
+            <h2 class="h2 h2--new-customer">Create New Customer</h2>
+            <form class="form form--create-customer">
+              <label class="label label--create-customer" for="create">User Name</label>
+              <input class="input input--create-customer" type="text" name="create" placeholder="Enter Full Name">
+              <button class="button button--create-customer">Submit</button>
+            </form>
+          </div>
+        </section>
+      </main>
+    </nav>
+
+
 
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   </body>
