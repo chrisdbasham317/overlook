@@ -62,7 +62,7 @@ describe('bookingRepo', () => {
     expect(bookingRepo.availableRooms.length).to.equal(47);
   });
 
-  it('should beable to cancel a booking', () => {
+  it('should be able to cancel a booking', () => {
     bookingRepo.cancelBooking(7, '2019/08/02');
     expect(bookingRepo.currentBookings.length).to.equal(26)
   })

@@ -1,13 +1,133 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you import jQuery into a JS file if you use jQuery in that file
 import $ from 'jquery';
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
+import domUpdates from './domUpdates.js';
+import bookings from '../data/Bookings.js';
+import roomServices from '../data/Room-services.js';
+import rooms from '../data/Rooms.js';
+import users from '../data/Users.js'
 
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
+import BookingRepo from './BookingRepo.js';
+import UserRepo from './UserRepo.js';
+
 import './images/turing-logo.png'
 
-console.log('This is the JavaScript entry file - your code begins here.');
+
+let userRepo = new UserRepo(users);
+let bookingRepo = new BookingRepo(rooms.rooms, bookings.bookings);
+let currentCustomer = {};
+const dateToday = `${new Date().getFullYear()}/0${new Date().getMonth() + 1}/${new Date().getDate()}`;
+
+// login modal logic
+$('.button--login').click(() => {
+  event.preventDefault();
+  domUpdates.appendText('.h2--welcome', `Welcome ${$('.input--login').val()}`);
+  $('.div--modal-login').toggle();
+});
+// end modal logic
+
+$(document).ready(() => {
+  bookingRepo.getReservedRooms(dateToday);
+  bookingRepo.getAvailableRooms();
+  let availableRooms = bookingRepo.availableRooms.length;
+  let percentOccupied = bookingRepo.calculatePercentBooked();
+  
+  domUpdates.appendText('.p--rooms-available', `${availableRooms} Vacancies Today`);
+  domUpdates.appendText('.p--percent-occupied', `${percentOccupied}`);
+  domUpdates.appendText('.h3--date', `Today's Date: ${dateToday}`);
+})
+
+// Tab Control
+$('.li--main').click(() => {
+  domUpdates.toggleTabs($('.li--main'));
+  domUpdates.toggleContent($('.section--main-content'));
+});
+
+$('.li--orders').click(() => {
+  domUpdates.toggleTabs($('.li--orders'));
+  domUpdates.toggleContent($('.section--orders-content'));
+});
+
+$('.li--rooms').click(() => {
+  let $customerText = $('.h2--selected-customer').text()
+  if ($customerText === 'Customer: Not Selected') {
+    displayGeneralRoomInfo();
+  } else {
+    displayCustomerRoomInfo();
+  }
+  domUpdates.toggleTabs($('.li--rooms'));
+  domUpdates.toggleContent($('.section--rooms-content'));
+});
+
+$('.li--customer').click(() => {
+  domUpdates.toggleTabs($('.li--customer'));
+  domUpdates.toggleContent($('.section--customer-content'));
+});
+// End Tab Control
+
+// customer tab
+$('.button--search-customer').click(() => {
+  event.preventDefault();
+  let $customerNameField = $('.input--search-customer');
+  displayCurrentUser($customerNameField.val());
+  domUpdates.clearField($customerNameField);
+});
+
+
+$('.button--create-customer').click(() => {
+  event.preventDefault();
+  let $customerNameField = $('.input--create-customer');
+  userRepo.addNewUser($customerNameField.val());
+  displayCurrentUser($customerNameField.val());
+  domUpdates.clearField($customerNameField);
+})
+
+$('.button--close-modal').click(() => {
+  event.preventDefault();
+  domUpdates.toggleModal();
+})
+
+function toggleError(element, error) {
+  domUpdates.appendText(element, error);
+  domUpdates.toggleModal();
+}
+
+function displayCurrentUser(name) {
+  let $customerName = name;
+  let currentCustomer = userRepo.findCurrentUser($customerName);
+  if (currentCustomer === undefined) {
+    toggleError('.p--error-text', 'That customer does not exist. Please search again, or create a new customer.');
+  } else {
+    domUpdates.appendText('.h2--selected-customer', `Customer: ${currentCustomer.name}; ID: ${currentCustomer.id}`);
+  }  
+}
+// end customer tab
+
+// room tab
+function displayGeneralRoomInfo() {
+  let popularDate = bookingRepo.findPopularDate();
+  let availableDate = bookingRepo.findMostOpenings();
+  domUpdates.appendText('.p--popular-date', `${popularDate}`);
+  domUpdates.appendText('.p--most-available-date', `${availableDate}`);
+}
+
+function displayCustomerRoomInfo() {
+
+}
+
+$('.button--room-search').click(() => {
+  event.preventDefault();
+  let $date = $('.input--room-search').val()
+  bookingRepo.getReservedRooms($date);
+  bookingRepo.getAvailableRooms();
+  let desiredRooms = bookingRepo.availableRooms;
+  domUpdates.toggleShow('.table--room-results');
+  desiredRooms.forEach(room => domUpdates.addText(
+    `<tr>
+    <td>${room.number}</td>
+    <td>${room.bedSize}</td>
+    <td>${room.numBeds}</td>
+    <td>${room.costPerNight}</td>
+    </tr>`, '.table--room-results'));
+})
+
+// end room tab
