@@ -15,7 +15,8 @@ body {
   background-image: url('https://i.imgur.com/dUlTOrH.jpg');
   background-position: center;
   background-size: cover;
-  display: flex;
+  // display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -145,7 +146,7 @@ background-color: $header-background;
 
   .div {
     background-color: #ffffff;
-    display: inline-block;
+    // display: inline-block;
     margin: 25px;
     min-height: 40vh;
     min-width: 30vw;
@@ -158,6 +159,10 @@ background-color: $header-background;
 }
 
 .section--rooms-content {
+  display: none;
+}
+
+.table--room-results {
   display: none;
 }
 

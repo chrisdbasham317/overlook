@@ -22,6 +22,7 @@
         <button class="button button--close-modal">Acknowledge</button>
       </section>
     </div>
+    <!-- end modal -->
     <header class="header header--banner">
       <h1 class="h1 h1--main-header">OverLook Hotel</h1>
       <h2 class="h2 h2--main-subheader">Denver's Premier Hotel In LoDo</h2>
@@ -29,7 +30,7 @@
     <nav class="nav nav--tabs">
       <h1 class="h2 h2--welcome">Welcome</h2>
       <h2 class="h2 h2--selected-customer">Customer: Not Selected</h2>
-      <h3 class="h3 h3--date">Today's Date:</h3>
+      <h3 class="h3 h3--date"></h3>
       <div class="div div--tabs">
           <ul class="ul ul--tabs">
             <li class="li li--main active">Main</li>
@@ -57,7 +58,32 @@
 
         </section>
         <section class="section section--rooms-content">
+          <div class="div div--general-room-info">
+            <section class="section section--popular-date">
+              <h2 class="h2 h2--popular-date">Most Popular Booking Date</h2>
+              <p class="p p--popular-date"></p>
+            </section>
+            <section class="section section--most-available-date">
+              <h2 class="h2 h2--most-available-date">Most Rooms Available On:</h2>
+              <p class="p p--most-available-date"></p>
+            </section>
+            <section class="section section--room-search">
+              <label class="label label--room-search" for="room-search">Search For Rooms By Date</label>
+              <input type="text" name="room-search" placeholder="yyyy/mm/dd" class="input input--room-search">
+              <button class="button button--room-search">Search</button>
+              <table class="table table--room-results">
+                <tr>
+                  <th>Room Number</th>
+                  <th>Bed Size</th>
+                  <th>Number of Beds</th>
+                  <th>Cost Per Night</th>
+                </tr>
+              </table>
+            </section>
+          </div>
+          <div class="section section--customer-room-info">
 
+          </div>
         </section>
         <section class="section section--customer-content">
           <div class="div div--customer-search">

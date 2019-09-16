@@ -10,8 +10,12 @@ class BookingRepo {
   }
 
   getAvailableRooms() {
-    let reservedRooms = this.reservedRooms.map(booking => booking.roomNumber);
-    this.availableRooms = this.rooms.filter(room => !reservedRooms.includes(room.number));
+    if (this.reservedRooms === []) {
+      this.availableRooms = this.rooms;
+    } else {
+      let reservedRooms = this.reservedRooms.map(booking => booking.roomNumber);
+      this.availableRooms = this.rooms.filter(room => !reservedRooms.includes(room.number));
+    }
   }
 
   calculatePercentBooked() {

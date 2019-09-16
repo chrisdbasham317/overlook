@@ -9,18 +9,32 @@ import users from '../data/Users.js'
 import BookingRepo from './BookingRepo.js';
 import UserRepo from './UserRepo.js';
 
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
-console.log('This is the JavaScript entry file - your code begins here.');
+
 
 let userRepo = new UserRepo(users);
-let currentCustomer;
+let bookingRepo = new BookingRepo(rooms.rooms, bookings.bookings);
+let currentCustomer = {};
+const dateToday = `${new Date().getFullYear()}/0${new Date().getMonth() + 1}/${new Date().getDate()}`;
 
+// login modal logic
 $('.button--login').click(() => {
   event.preventDefault();
   domUpdates.appendText('.h2--welcome', `Welcome ${$('.input--login').val()}`);
   $('.div--modal-login').toggle();
 });
+// end modal logic
+
+$(document).ready(() => {
+  bookingRepo.getReservedRooms(dateToday);
+  bookingRepo.getAvailableRooms();
+  let availableRooms = bookingRepo.availableRooms.length;
+  let percentOccupied = bookingRepo.calculatePercentBooked();
+  
+  domUpdates.appendText('.p--rooms-available', `${availableRooms} Vacancies Today`);
+  domUpdates.appendText('.p--percent-occupied', `${percentOccupied}`);
+  domUpdates.appendText('.h3--date', `Today's Date: ${dateToday}`);
+})
 
 // Tab Control
 $('.li--main').click(() => {
@@ -34,6 +48,12 @@ $('.li--orders').click(() => {
 });
 
 $('.li--rooms').click(() => {
+  let $customerText = $('.h2--selected-customer').text()
+  if ($customerText === 'Customer: Not Selected') {
+    displayGeneralRoomInfo();
+  } else {
+    displayCustomerRoomInfo();
+  }
   domUpdates.toggleTabs($('.li--rooms'));
   domUpdates.toggleContent($('.section--rooms-content'));
 });
@@ -44,6 +64,7 @@ $('.li--customer').click(() => {
 });
 // End Tab Control
 
+// customer tab
 $('.button--search-customer').click(() => {
   event.preventDefault();
   let $customerNameField = $('.input--search-customer');
@@ -65,6 +86,11 @@ $('.button--close-modal').click(() => {
   domUpdates.toggleModal();
 })
 
+function toggleError(element, error) {
+  domUpdates.appendText(element, error);
+  domUpdates.toggleModal();
+}
+
 function displayCurrentUser(name) {
   let $customerName = name;
   let currentCustomer = userRepo.findCurrentUser($customerName);
@@ -74,8 +100,34 @@ function displayCurrentUser(name) {
     domUpdates.appendText('.h2--selected-customer', `Customer: ${currentCustomer.name}; ID: ${currentCustomer.id}`);
   }  
 }
+// end customer tab
 
-function toggleError(element, error) {
-  domUpdates.appendText(element, error);
-  domUpdates.toggleModal();
+// room tab
+function displayGeneralRoomInfo() {
+  let popularDate = bookingRepo.findPopularDate();
+  let availableDate = bookingRepo.findMostOpenings();
+  domUpdates.appendText('.p--popular-date', `${popularDate}`);
+  domUpdates.appendText('.p--most-available-date', `${availableDate}`);
 }
+
+function displayCustomerRoomInfo() {
+
+}
+
+$('.button--room-search').click(() => {
+  event.preventDefault();
+  let $date = $('.input--room-search').val()
+  bookingRepo.getReservedRooms($date);
+  bookingRepo.getAvailableRooms();
+  let desiredRooms = bookingRepo.availableRooms;
+  domUpdates.toggleShow('.table--room-results');
+  desiredRooms.forEach(room => domUpdates.addText(
+    `<tr>
+    <td>${room.number}</td>
+    <td>${room.bedSize}</td>
+    <td>${room.numBeds}</td>
+    <td>${room.costPerNight}</td>
+    </tr>`, '.table--room-results'));
+})
+
+// end room tab

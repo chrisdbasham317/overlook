@@ -5,6 +5,11 @@ const domUpdates = {
     $(element).text(text);
   },
 
+  addText(text, element) {
+    console.log(text);
+    $(text).appendTo(element)
+  },
+
   toggleContent(element) {
     let allContent = ['.section--main-content', '.section--orders-content', '.section--rooms-content', '.section--customer-content']
     let selectedContent = $(element);
@@ -29,6 +34,10 @@ const domUpdates = {
   toggleModal() {
     $('.div--modal-background').toggle();
     $('.section--error').toggle();
+  },
+
+  toggleShow(element) {
+    $(element).toggle();
   },
 
   clearField(field) {
