@@ -39,72 +39,67 @@
             <li class="li li--customer inactive">Customer</li>
           </ul>
       </div>
-      <main class="main main--content-display">
-        <section class="section section--main-content">
-          <div class="div div--rooms-available">
-            <h2 class="h2 h2--rooms-available">Rooms Available</h2>
-            <p class="p p--rooms-available"></p>
-          </div>
-          <div class="div div--todays-revenue">
-            <h2 class="h2 h2--todays-revenue">Today's Revenue</h2>
-            <p class="p p--todays-revenue"></p>
-          </div>
-          <div class="div div--percent-occupied">
-            <h2 class="h2 h2--percent-occupied">Percent of Rooms Occupied</h2>
-            <p class="p p--percent-occupied"></p>
-          </div>
-        </section>
-        <section class="section section--orders-content">
-
-        </section>
-        <section class="section section--rooms-content">
-          <div class="div div--general-room-info">
-            <section class="section section--popular-date">
-              <h2 class="h2 h2--popular-date">Most Popular Booking Date</h2>
-              <p class="p p--popular-date"></p>
-            </section>
-            <section class="section section--most-available-date">
-              <h2 class="h2 h2--most-available-date">Most Rooms Available On:</h2>
-              <p class="p p--most-available-date"></p>
-            </section>
-            <section class="section section--room-search">
-              <label class="label label--room-search" for="room-search">Search For Rooms By Date</label>
-              <input type="text" name="room-search" placeholder="yyyy/mm/dd" class="input input--room-search">
-              <button class="button button--room-search">Search</button>
-              <table class="table table--room-results">
-                <tr>
-                  <th>Room Number</th>
-                  <th>Bed Size</th>
-                  <th>Number of Beds</th>
-                  <th>Cost Per Night</th>
-                </tr>
-              </table>
-            </section>
-          </div>
-          <div class="section section--customer-room-info">
-
-          </div>
-        </section>
-        <section class="section section--customer-content">
-          <div class="div div--customer-search">
-            <h2 class="h2 h2--customer-search">Search for Existing Customer</h2>
-            <form class="form form--search-customer">
-              <label class="label label--search-customer" for="search">User Name</label>
-              <input class="input input--search-customer" type="text" name="search" placeholder="Enter Full Name">
-              <button class="button button--search-customer">Search</button>
-            </form>
-          </div>
-          <div class="div div--new-customer">
-            <h2 class="h2 h2--new-customer">Create New Customer</h2>
-            <form class="form form--create-customer">
-              <label class="label label--create-customer" for="create">User Name</label>
-              <input class="input input--create-customer" type="text" name="create" placeholder="Enter Full Name">
-              <button class="button button--create-customer">Submit</button>
-            </form>
-          </div>
-        </section>
-      </main>
     </nav>
+    <main class="main main--content-display">
+      <section class="section section--main-content">
+        <div class="div div--rooms-available">
+          <h2 class="h2 h2--rooms-available">Rooms Available</h2>
+          <p class="p p--rooms-available"></p>
+        </div>
+        <div class="div div--todays-revenue">
+          <h2 class="h2 h2--todays-revenue">Today's Revenue</h2>
+          <p class="p p--todays-revenue"></p>
+        </div>
+        <div class="div div--percent-occupied">
+          <h2 class="h2 h2--percent-occupied">Percent of Rooms Occupied</h2>
+          <p class="p p--percent-occupied"></p>
+        </div>
+      </section>
+      <section class="section section--orders-content">
+
+      </section>
+      <section class="section section--rooms-content">
+        <div class="div div--general-room-info">
+          <section class="section section--popular-date">
+            <h2 class="h2 h2--popular-date">Most Popular Booking Date</h2>
+            <p class="p p--popular-date"></p>
+          </section>
+          <section class="section section--most-available-date">
+            <h2 class="h2 h2--most-available-date">Most Rooms Available On:</h2>
+            <p class="p p--most-available-date"></p>
+          </section>
+          <section class="section section--room-search">
+            <label class="label label--room-search" for="room-search">Search For Rooms By Date</label>
+            <input type="text" name="room-search" placeholder="yyyy/mm/dd" class="input input--room-search" minlength="11">
+            <button class="button button--room-search">Search</button>
+            <table class="table table--room-results">
+            </table>
+            <p class="p p--room-error"></p>
+          </section>
+        </div>
+        <div class="section section--customer-room-info">
+
+        </div>
+      </section>
+      <section class="section section--customer-content">
+        <div class="div div--customer-search">
+          <h2 class="h2 h2--customer-search">Search for Existing Customer</h2>
+          <form class="form form--search-customer">
+            <label class="label label--search-customer" for="search">User Name</label>
+            <input class="input input--search-customer" type="text" name="search" placeholder="Enter Full Name">
+            <button class="button button--search-customer">Search</button>
+          </form>
+        </div>
+        <div class="div div--new-customer">
+          <h2 class="h2 h2--new-customer">Create New Customer</h2>
+          <form class="form form--create-customer">
+            <label class="label label--create-customer" for="create">User Name</label>
+            <input class="input input--create-customer" type="text" name="create" placeholder="Enter Full Name">
+            <button class="button button--create-customer">Submit</button>
+          </form>
+        </div>
+      </section>
+    </main>
 
 
 

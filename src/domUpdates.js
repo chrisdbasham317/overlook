@@ -6,7 +6,6 @@ const domUpdates = {
   },
 
   addText(text, element) {
-    console.log(text);
     $(text).appendTo(element)
   },
 
@@ -42,6 +41,10 @@ const domUpdates = {
 
   clearField(field) {
     field.val('');
+  },
+
+  clearElement(element) {
+    $(element).text('');
   }
 }
 

@@ -110,24 +110,41 @@ function displayGeneralRoomInfo() {
   domUpdates.appendText('.p--most-available-date', `${availableDate}`);
 }
 
-function displayCustomerRoomInfo() {
-
-}
-
 $('.button--room-search').click(() => {
   event.preventDefault();
-  let $date = $('.input--room-search').val()
+  let $date = $('.input--room-search').val();
   bookingRepo.getReservedRooms($date);
   bookingRepo.getAvailableRooms();
+  domUpdates.clearElement('.table--room-results');
+  domUpdates.clearElement('.p--room-error');
   let desiredRooms = bookingRepo.availableRooms;
-  domUpdates.toggleShow('.table--room-results');
-  desiredRooms.forEach(room => domUpdates.addText(
-    `<tr>
-    <td>${room.number}</td>
-    <td>${room.bedSize}</td>
-    <td>${room.numBeds}</td>
-    <td>${room.costPerNight}</td>
-    </tr>`, '.table--room-results'));
-})
+  if (desiredRooms !== [] && validateDate($date)) {
+    return updateRoomSearchTable(desiredRooms);
+  } else {
+    domUpdates.appendText('.p--room-error', 'Invalid Date');
+  }
+});
 
+function validateDate(date) {
+  return date.split('').length === 10 ? true : false;
+}
+
+function updateRoomSearchTable(rooms) {
+  domUpdates.addText(
+    `<th>Room Number</th>
+    <th>Bed Size</th>
+    <th>Number of Beds</th>
+    <th>Cost Per Night</th>`, '.table--room-results');
+  rooms.forEach(room => domUpdates.addText(
+    `<tr class="tr tr--room-results">
+  <td>${room.number}</td>
+  <td>${room.bedSize}</td>
+  <td>${room.numBeds}</td>
+  <td>${room.costPerNight}</td>
+  </tr>`, '.table--room-results'));
+}
+
+function displayCustomerRoomInfo() {
+  
+}
 // end room tab
