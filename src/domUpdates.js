@@ -24,6 +24,15 @@ const domUpdates = {
     selectedTab.addClass('active');
     selectedTab.removeClass('inactive');
 
+  },
+
+  toggleModal() {
+    $('.div--modal-background').toggle();
+    $('.section--error').toggle();
+  },
+
+  clearField(field) {
+    field.val('');
   }
 }
 

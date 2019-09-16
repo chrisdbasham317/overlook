@@ -22,7 +22,7 @@ body {
   min-height: 100vh;
   min-width: 100vw;
   position: fixed;
-  z-index: 1000;
+  z-index: 2000;
 
   .form--login {
     display: flex;
@@ -54,6 +54,31 @@ body {
       min-width: 33.4vw;
     }
   }
+}
+
+// Error Modal Styling
+.div--modal-background {
+  background: grey;
+  display: none;
+  left: 0;
+  min-height: 100vh;
+  min-width: 100vw;
+  opacity: .4;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+.section--error {
+  background-color: lighten($header-background, 30%);
+  display: none;
+  left: 20%;
+  min-height: 40vh;
+  min-width: 60vw;
+  position: fixed;
+  top: 30%;
+  z-index: 1200;
+
 }
 // End Modal Styling
 

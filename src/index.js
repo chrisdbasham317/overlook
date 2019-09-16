@@ -44,22 +44,38 @@ $('.li--customer').click(() => {
 });
 // End Tab Control
 
-function displayCurrentUser(name) {
-  let $customerName = name;
-  let currentCustomer = userRepo.findCurrentUser($customerName);
-  domUpdates.appendText('.h2--selected-customer', `Customer: ${currentCustomer.name}; ID: ${currentCustomer.id}`);
-}
-
 $('.button--search-customer').click(() => {
   event.preventDefault();
-  let $customerName = $('.input--search-customer').val();
-  displayCurrentUser($customerName);
+  let $customerNameField = $('.input--search-customer');
+  displayCurrentUser($customerNameField.val());
+  domUpdates.clearField($customerNameField);
 });
 
 
 $('.button--create-customer').click(() => {
   event.preventDefault();
-  let $customerName = $('.input--create-customer').val();
-  userRepo.addNewUser($customerName);
-  displayCurrentUser($customerName);
+  let $customerNameField = $('.input--create-customer');
+  userRepo.addNewUser($customerNameField.val());
+  displayCurrentUser($customerNameField.val());
+  domUpdates.clearField($customerNameField);
 })
+
+$('.button--close-modal').click(() => {
+  event.preventDefault();
+  domUpdates.toggleModal();
+})
+
+function displayCurrentUser(name) {
+  let $customerName = name;
+  let currentCustomer = userRepo.findCurrentUser($customerName);
+  if (currentCustomer === undefined) {
+    toggleError('.p--error-text', 'That customer does not exist. Please search again, or create a new customer.');
+  } else {
+    domUpdates.appendText('.h2--selected-customer', `Customer: ${currentCustomer.name}; ID: ${currentCustomer.id}`);
+  }  
+}
+
+function toggleError(element, error) {
+  domUpdates.appendText(element, error);
+  domUpdates.toggleModal();
+}
