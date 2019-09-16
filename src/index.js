@@ -1,13 +1,51 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you import jQuery into a JS file if you use jQuery in that file
 import $ from 'jquery';
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
+import domUpdates from './domUpdates.js';
+import bookings from '../data/Bookings.js';
+import roomServices from '../data/Room-services.js';
+import rooms from '../data/Rooms.js';
+import users from '../data/Users.js'
+
+import BookingRepo from './BookingRepo.js';
+import UserRepo from './UserRepo.js';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
-
 console.log('This is the JavaScript entry file - your code begins here.');
+
+let userRepo = new UserRepo(users);
+
+$('.button--login').click(() => {
+  event.preventDefault();
+  domUpdates.appendText('.h2--welcome', `Welcome ${$('.input--login').val()}`);
+  $('.div--modal-login').toggle();
+});
+
+// Tab Control
+$('.li--main').click(() => {
+  domUpdates.toggleTabs($('.li--main'));
+  domUpdates.toggleContent($('.section--main-content'));
+});
+
+$('.li--orders').click(() => {
+  domUpdates.toggleTabs($('.li--orders'));
+  domUpdates.toggleContent($('.section--orders-content'));
+});
+
+$('.li--rooms').click(() => {
+  domUpdates.toggleTabs($('.li--rooms'));
+  domUpdates.toggleContent($('.section--rooms-content'));
+});
+
+$('.li--customer').click(() => {
+  domUpdates.toggleTabs($('.li--customer'));
+  domUpdates.toggleContent($('.section--customer-content'));
+});
+// End Tab Control
+
+$('.button--search-customer').click(() => {
+  event.preventDefault();
+  let $customerName = $('.input--search-customer').val();
+  let $customer = userRepo.findCurrentUser($customerName);
+  domUpdates.appendText('.h2--selected-customer', `Customer: ${$customer.name}; ID: ${$customer.id}`);
+})
