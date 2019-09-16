@@ -14,6 +14,7 @@ import './images/turing-logo.png'
 console.log('This is the JavaScript entry file - your code begins here.');
 
 let userRepo = new UserRepo(users);
+let currentCustomer;
 
 $('.button--login').click(() => {
   event.preventDefault();
@@ -43,9 +44,22 @@ $('.li--customer').click(() => {
 });
 // End Tab Control
 
+function displayCurrentUser(name) {
+  let $customerName = name;
+  let currentCustomer = userRepo.findCurrentUser($customerName);
+  domUpdates.appendText('.h2--selected-customer', `Customer: ${currentCustomer.name}; ID: ${currentCustomer.id}`);
+}
+
 $('.button--search-customer').click(() => {
   event.preventDefault();
   let $customerName = $('.input--search-customer').val();
-  let $customer = userRepo.findCurrentUser($customerName);
-  domUpdates.appendText('.h2--selected-customer', `Customer: ${$customer.name}; ID: ${$customer.id}`);
+  displayCurrentUser($customerName);
+});
+
+
+$('.button--create-customer').click(() => {
+  event.preventDefault();
+  let $customerName = $('.input--create-customer').val();
+  userRepo.addNewUser($customerName);
+  displayCurrentUser($customerName);
 })
