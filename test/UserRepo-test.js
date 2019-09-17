@@ -7,7 +7,7 @@ import UserRepo from '../src/UserRepo.js';
 describe('UserRepo', () => {
   let users;
   beforeEach(() => {
-    users = new UserRepo(data);
+    users = new UserRepo(data.users);
   });  
   
   it('should return true', () => {
