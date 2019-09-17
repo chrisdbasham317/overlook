@@ -257,6 +257,5 @@ $('.button--submit-booking').click(() => {
   updateBookingArrays(dateToday);
   showBookingSummary();
   closeBookingModal();
-  console.log(bookingRepo.reservedRooms);
 })
 // end room tab
