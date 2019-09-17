@@ -5,9 +5,11 @@ import roomServices from '../data/Room-services.js';
 
 import BookingRepo from './BookingRepo.js';
 import UserRepo from './UserRepo.js';
+import OrdersRepo from './OrdersRepo.js';
 
 let userRepo 
 let bookingRepo
+let ordersRepo
 let currentCustomer = {};
 const dateToday = `${new Date().getFullYear()}/0${new Date().getMonth() + 1}/${new Date().getDate()}`;
 
@@ -24,6 +26,7 @@ Promise.all([
   .then(data => {
     userRepo = new UserRepo(data[0].users);
     bookingRepo = new BookingRepo(data[1].rooms, data[2].bookings);
+    ordersRepo = new OrdersRepo(data[3].roomServices);
     runStartLogic();
   });
 
@@ -41,9 +44,13 @@ function runStartLogic() {
     updateBookingArrays(dateToday);
     let availableRooms = bookingRepo.availableRooms.length;
     let percentOccupied = bookingRepo.calculatePercentBooked();
-  
+    let bookingRevenue = bookingRepo.calculateRevenue(dateToday);
+    let servicesToday = ordersRepo.getOrdersByDate(dateToday);
+    let servicesRevenue = ordersRepo.calculateCost(servicesToday);
+    let totalRevenue = bookingRevenue + servicesRevenue;
     domUpdates.appendText('.p--rooms-available', `${availableRooms} Vacancies Today`);
     domUpdates.appendText('.p--percent-occupied', `${percentOccupied}`);
+    domUpdates.appendText('.p--todays-revenue', `$${parseFloat(totalRevenue.toFixed(2))}`);
     domUpdates.appendText('.h3--date', `Today's Date: ${dateToday}`);
   })
 }
