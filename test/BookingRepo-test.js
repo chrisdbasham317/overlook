@@ -88,4 +88,8 @@ describe('bookingRepo', () => {
   it('should be able to filter rooms by type', () => {
     expect(bookingRepo.filterRoomsByType('residential suite').length).to.equal(8);
   })
+
+  it('should be able to calulate revenue for bookings for a date', () => {
+    expect(bookingRepo.calculateRevenue('2019/09/01')).to.equal(773.46);
+  })
 });
