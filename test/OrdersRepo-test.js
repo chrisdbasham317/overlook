@@ -20,5 +20,9 @@ describe('Orders', () => {
 
   it('should return all service charges for a user', () => {
     expect(ordersRepo.getOrdersByUser(2).length).to.equal(4);
+  });
+
+  it('should calculate cost of all services for a user', () => {
+    expect(ordersRepo.calculateUserChargesAllTime(2)).to.equal(47.57);
   })
 });
