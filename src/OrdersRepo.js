@@ -6,6 +6,10 @@ class OrdersRepo {
   getOrdersByDate(date) {
     return this.roomServices.filter(order => order.date === date);
   }
+
+  getOrdersByUser(id) {
+    return this.roomServices.filter(order => order.userID === id);
+  }
 }
 
 

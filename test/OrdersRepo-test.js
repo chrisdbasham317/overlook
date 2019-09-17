@@ -14,9 +14,11 @@ describe('Orders', () => {
     expect(true).to.equal(true);
   });
 
-  it('should return all room charges for a given date', () => {
+  it('should return all service charges for a given date', () => {
     expect(ordersRepo.getOrdersByDate('2019/08/11').length).to.equal(2);
   });
 
-
+  it('should return all service charges for a user', () => {
+    expect(ordersRepo.getOrdersByUser(2).length).to.equal(4);
+  })
 });
