@@ -1,21 +1,32 @@
 import $ from 'jquery';
 import './css/base.scss';
 import domUpdates from './domUpdates.js';
-import bookings from '../data/Bookings.js';
 import roomServices from '../data/Room-services.js';
-import rooms from '../data/Rooms.js';
-import users from '../data/Users.js'
 
 import BookingRepo from './BookingRepo.js';
 import UserRepo from './UserRepo.js';
 
-import './images/turing-logo.png'
-
-
-let userRepo = new UserRepo(users);
-let bookingRepo = new BookingRepo(rooms.rooms, bookings.bookings);
+let userRepo 
+let bookingRepo
 let currentCustomer = {};
 const dateToday = `${new Date().getFullYear()}/0${new Date().getMonth() + 1}/${new Date().getDate()}`;
+
+Promise.all([
+  fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/users/users')
+    .then(response => response.json()),
+  fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/rooms/rooms')
+    .then(response => response.json()),
+  fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings')
+    .then(response => response.json()),
+  fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/room-services/roomServices')
+    .then(response => response.json()),
+])
+  .then(data => {
+    userRepo = new UserRepo(data[0].users);
+    bookingRepo = new BookingRepo(data[1].rooms, data[2].bookings);
+    runStartLogic();
+  });
+
 // const dateToday = '2019/09/01';
 
 // login modal logic
@@ -25,16 +36,17 @@ $('.button--login').click(() => {
   $('.div--modal-login').toggle();
 });
 // end modal logic
-
-$(document).ready(() => {
-  updateBookingArrays(dateToday);
-  let availableRooms = bookingRepo.availableRooms.length;
-  let percentOccupied = bookingRepo.calculatePercentBooked();
+function runStartLogic() {
+  $(document).ready(() => {
+    updateBookingArrays(dateToday);
+    let availableRooms = bookingRepo.availableRooms.length;
+    let percentOccupied = bookingRepo.calculatePercentBooked();
   
-  domUpdates.appendText('.p--rooms-available', `${availableRooms} Vacancies Today`);
-  domUpdates.appendText('.p--percent-occupied', `${percentOccupied}`);
-  domUpdates.appendText('.h3--date', `Today's Date: ${dateToday}`);
-})
+    domUpdates.appendText('.p--rooms-available', `${availableRooms} Vacancies Today`);
+    domUpdates.appendText('.p--percent-occupied', `${percentOccupied}`);
+    domUpdates.appendText('.h3--date', `Today's Date: ${dateToday}`);
+  })
+}
 
 // Tab Control
 $('.li--main').click(() => {
@@ -99,6 +111,7 @@ function displayCurrentUser(name) {
   currentCustomer = userRepo.findCurrentUser($customerName);
   if (currentCustomer === undefined) {
     toggleError('.p--error-text', 'That customer does not exist. Please search again, or create a new customer.');
+    domUpdates.appendText('.h2--selected-customer', `Customer: Not Selected`);   
   } else {
     domUpdates.appendText('.h2--selected-customer', `Customer: ${currentCustomer.name}; ID: ${currentCustomer.id}`);
   }  
@@ -217,10 +230,14 @@ $('.button--close-bookings').click(() => {
 $('.button--filter-rooms').click(() => {
   event.preventDefault();
   domUpdates.clearElement('.table--filtered-rooms');
-  updateBookingArrays();
+  updateBookingArrays(dateToday);
   let $type = $('.select--room-type').val();
   let rooms = bookingRepo.filterRoomsByType($type);
-  updateRoomTable(rooms, '.table--filtered-rooms');
+  if (rooms.length === 0) {
+    updateRoomTable(bookingRepo.availableRooms, '.table--filtered-rooms');
+  } else {
+    updateRoomTable(rooms, '.table--filtered-rooms');
+  }
 });
 
 $('.button--submit-booking').click(() => {
@@ -230,7 +247,9 @@ $('.button--submit-booking').click(() => {
   let date = dateToday;
   let booking = { 'userID': customer, 'date': date, 'roomNumber': $roomNum };
   bookingRepo.bookRoom(booking);
+  updateBookingArrays(dateToday);
   showBookingSummary();
   closeBookingModal();
+  console.log(bookingRepo.reservedRooms);
 })
 // end room tab

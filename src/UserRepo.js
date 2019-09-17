@@ -1,6 +1,6 @@
 class UserRepo {
   constructor(data) {
-    this.users = data.users;
+    this.users = data;
     this.currentUser = {};
   }
 
