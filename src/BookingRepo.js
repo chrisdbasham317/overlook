@@ -74,6 +74,16 @@ class BookingRepo {
   filterRoomsByType(type) {
     return this.availableRooms.filter(room => room.roomType.toUpperCase() === type.toUpperCase());
   }
+
+  calculateRevenue(date) {
+    this.getReservedRooms(date);
+    let roomNumbersReserved = this.reservedRooms.map(reservation => reservation.roomNumber);
+    let roomsBooked = this.rooms.filter(room => roomNumbersReserved.includes(room.number));
+    let totalRevenue = roomsBooked.reduce((total, room) => {
+      return total += room.costPerNight;
+    }, 0)
+    return parseFloat(totalRevenue.toFixed(2));
+  }
 }
 
 export default BookingRepo;
