@@ -30,13 +30,25 @@ const domUpdates = {
 
   },
 
-  toggleModal() {
+  toggleModal(element) {
     $('.div--modal-background').toggle();
-    $('.section--error').toggle();
+    $(element).toggle();
   },
 
   toggleShow(element) {
     $(element).toggle();
+  },
+
+  showElement(element) {
+    $(element).show();
+  },
+
+  hideElement(element) {
+    $(element).hide();
+  },
+
+  removeElement(element) {
+    $(element).remove();
   },
 
   clearField(field) {

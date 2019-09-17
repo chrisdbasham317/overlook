@@ -57,7 +57,8 @@ body {
   }
 }
 
-// Error Modal Styling
+// Input Modal Styling
+
 .div--modal-background {
   background: grey;
   display: none;
@@ -70,7 +71,8 @@ body {
   z-index: 1000;
 }
 
-.section--error {
+.section--error,
+.div--booking-modal {
   background-color: lighten($header-background, 30%);
   display: none;
   left: 20%;
@@ -80,6 +82,29 @@ body {
   top: 30%;
   z-index: 1200;
 
+  .table--filtered-rooms {
+    background-color: lighten($header-background, 50%);
+    text-align: center;
+
+    table,
+    tr,
+    td {
+      border: 1px solid black;
+      padding: 0 30px;
+    }
+  }
+
+  .h2--submit-booking {
+    margin: 4px 0;
+  }
+
+  .section--submit-booking {
+    margin-bottom: 25px;
+  }
+
+  .button--submit-booking {
+    margin-left: 10px;
+  }
 }
 // End Modal Styling
 
@@ -104,8 +129,10 @@ body {
 }
 
 .nav {
-  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
   font-family: 'Libre Baskerville', serif;
+  min-height: 20vh;
 }
   
 .ul--tabs {
@@ -152,6 +179,14 @@ background-color: $header-background;
     min-width: 30vw;
     padding: 10px;
   }
+}
+
+.p--customer-room-error {
+  display: none;
+}
+
+.button--book-room {
+  display: none
 }
 
 .section--orders-content {
