@@ -69,7 +69,7 @@ $('.li--main').click(() => {
 $('.li--orders').click(() => {
   let $customerText = $('.h2--selected-customer').text()
   domUpdates.clearElement('.table--orders-today');
-  domUpdates.clearElement
+  domUpdates.clearElement('.p--order-history-error')
   domUpdates.clearElement('.table--customer-all-time-orders')
   if ($customerText === 'Customer: Not Selected') {
     displayGeneralOrderInfo();
@@ -131,7 +131,7 @@ function displayCurrentUser(name) {
   currentCustomer = userRepo.findCurrentUser($customerName);
   if (currentCustomer === undefined) {
     toggleError('.p--error-text', 'That customer does not exist. Please search again, or create a new customer.');
-    domUpdates.appendText('.h2--selected-customer', `Customer: Not Selected`);   
+    domUpdates.appendText('.h2--selected-customer', `Customer: Not Selected`);  
   } else {
     domUpdates.appendText('.h2--selected-customer', `Customer: ${currentCustomer.name}; ID: ${currentCustomer.id}`);
   }  
@@ -280,7 +280,8 @@ function displayGeneralOrderInfo() {
 function displayCustomerOrderInfo() {
   let customerID = currentCustomer.id;
   let orderHistory = ordersRepo.getOrdersByUser(customerID);
-  console.log(orderHistory);
+  let todaysCost = ordersRepo.calculateUserChargesDate(customerID, dateToday);
+  let allTimeCost = ordersRepo.calculateUserChargesAllTime(customerID);
   domUpdates.showElement('.div--customer-order-info');
   domUpdates.hideElement('.div--general-order-info');
   if (orderHistory.length !== 0) {
@@ -288,6 +289,8 @@ function displayCustomerOrderInfo() {
   } else {
     domUpdates.appendText('.p--order-history-error', 'History Unavailable for This Customer');
   }
+  domUpdates.appendText('.p--customer-daily-cost', `$${todaysCost}`);
+  domUpdates.appendText('.p--customer-all-time-cost', `$${allTimeCost}`);
 }
 
 function updateOrdersTable(orders, table) {
