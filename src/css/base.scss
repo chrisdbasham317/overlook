@@ -73,14 +73,18 @@ body {
 }
 
 .section--error,
-.div--booking-modal {
+.div--booking-modal,
+.div--ordering-modal {
   background-color: lighten($header-background, 30%);
   display: none;
   left: 20%;
   min-height: 40vh;
+  max-height: 60vh;
   min-width: 60vw;
+  overflow-x: scroll;
+  padding: 25px;
   position: fixed;
-  top: 30%;
+  top: 15%;
   z-index: 1200;
 
   .table--filtered-rooms {

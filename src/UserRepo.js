@@ -5,7 +5,7 @@ class UserRepo {
   }
 
   findCurrentUser(name) {
-    let foundUser = this.users.filter(user => user.name === name);
+    let foundUser = this.users.filter(user => user.name.toUpperCase() === name.toUpperCase());
     return this.currentUser = foundUser[0];
   }
 

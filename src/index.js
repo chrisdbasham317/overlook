@@ -272,8 +272,28 @@ $('.button--submit-booking').click(() => {
 
 $('.button--order-service').click(() => {
   event.preventDefault();
-  
+  ordersRepo.getServiceOptions();
+  domUpdates.toggleModal('.div--ordering-modal');
+  updateMenuTable(ordersRepo.availableItems, '.table--order-options');
 });
+
+$('.button--submit-order').click(() => {
+  event.preventDefault();
+  let userID = parseInt(currentCustomer.id);
+  let $foodItem = $('.input--submit-order').val();
+  let date = dateToday;
+  let menuItem = ordersRepo.availableItems.filter(item => item.food.toUpperCase() === $foodItem.toUpperCase());
+  if (menuItem.length !== 0) {
+    ordersRepo.placeOrder({ userID: userID, date: date, food: menuItem[0].food, totalCost: menuItem[0].totalCost });
+  } else {
+    domUpdates.appendText('.p--order-error', 'Item is not on the menu. Please Try Again.');
+  }
+});
+
+$('.button--close-menu').click(() => {
+  event.preventDefault();
+  domUpdates.toggleModal('.div--ordering-modal');
+})
 // end room tab
 
 // orders tab
@@ -308,6 +328,17 @@ function updateOrdersTable(orders, table) {
   orders.forEach(order => domUpdates.addText(
     `<tr class="tr tr--orders">
     <td>${order.userID}</td>
+    <td>${order.food}</td>
+    <td>${order.totalCost}</td>
+    </tr>`, table));
+}
+
+function updateMenuTable(orders, table) {
+  domUpdates.addText(
+    `<th>Food</th>
+    <th>Cost</th>`, table);
+  orders.forEach(order => domUpdates.addText(
+    `<tr class="tr tr--menu">
     <td>${order.food}</td>
     <td>${order.totalCost}</td>
     </tr>`, table));

@@ -56,29 +56,19 @@
     <!-- order food modal -->
     <div class="div div--ordering-modal">
       <section class="section section--order-service">
-        <h1 class="h1 h1--book-room">Book New Room</h1>
-        <label for="room-type">Filter By Room Type</label>
-        <form class="form form--book-room">
-          <select name="room-type" class="select select--room-type">
-            <option value="single room">Single Room</option>
-            <option value="junior suite">Junior Suite</option>
-            <option value="suite">Suite</option>
-            <option value="residential suite">Residential Suite</option>
-          </select>
-          <button class="button button--filter-rooms">Show Rooms</button>
-        </form>
-        <section class="section section--filtered-rooms">
-          <table class="table table--filtered-rooms">
+        <h1 class="h1 h1--book-room">Place Order for Room Service</h1>
+          <table class="table table--order-options">
           </table>
         </section>
-        <button class="button button--close-bookings">Close</button>
+        <button class="button button--close-menu">Close</button>
       </section>
-      <section class="section section--submit-booking">
-        <h2 class="h2 h2--submit-booking">Select Room By Number</h2>
-        <form class="form form--submit-booking">
-          <label for="submit-booking">Room Number</label>
-          <input type="text" name="submit-booking" class="input input--submit-booking">
-          <button class="button button--submit-booking">Book</button>
+      <section class="section section--submit-order">
+        <h2 class="h2 h2--submit-order">Enter Food Name</h2>
+        <form class="form form--submit-order">
+          <label for="submit-order">Food</label>
+          <input type="text" name="submit-order" class="input input--submit-order">
+          <button class="button button--submit-order">Order</button>
+          <p class="p p--order-error"></p>
         </form>
       </section>
     </div>
