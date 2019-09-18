@@ -40,7 +40,7 @@ class OrdersRepo {
   }
 
   placeOrder(order) {
-    
+    return this.roomServices.push(order);
   }
 }
 

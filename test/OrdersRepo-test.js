@@ -34,4 +34,9 @@ describe('Orders', () => {
     ordersRepo.getServiceOptions();
     expect(ordersRepo.availableItems.length).to.equal(32);
   })
+
+  it('should be able to place a new order', () => {
+    ordersRepo.placeOrder({ userID: 10, date: "2019/09/01", food: "Rustic Cotton Sandwhich", totalCost: 17.33 });
+    expect(ordersRepo.roomServices.length).to.equal(33);
+  })
 });
