@@ -37,9 +37,3 @@ or go to the <a href="https://chrisdbasham317.github.io/overlook/">Live Page</a>
 - Incorporate Single Responsibility Principal to create a modular/scalable code base.
 - Create a robust test suite that thoroughly tests all functionality of a client-side application
 - Implement array iterator and mutator methods to manipulate app data
-
-## Screenshots
-
-![desktop-view-1](screenshots/desktop-view-1.png)
-
-![desktop-view-2](screenshots/desktop-view-2.png)
