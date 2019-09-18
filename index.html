@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Overlook Hotel</title>
+  </head>
+  <body>
+    <!-- splash page modal -->
+    <div class="div div--modal-login">
+      <form class="form form--login">
+        <h1 class="h1 h1--login">Welcome To OverLook Hotel</h1>
+        <label class="label label--login" for="login">User Name</label>
+        <input class="input input--login" type="text" placeholder="Enter User Name" name="login">
+        <button class="button button--login">Login</button>
+      </form>
+    </div>
+    <!-- end modal -->
+    <!-- error message modal -->
+    <div class="div div--modal-background"></div>
+    <div class="div div--error-modal">
+      <section class="section section--error">
+        <p class="p p--error text">That customer does not exist. Please select another.</p>
+        <button class="button button--close-modal">Acknowledge</button>
+      </section>
+    </div>
+    <!-- end modal -->
+    <!-- book room modal -->
+    <div class="div div--booking-modal">
+      <section class="section section--book-room">
+        <h1 class="h1 h1--book-room">Book New Room</h1>
+        <label for="room-type">Filter By Room Type</label>
+        <form class="form form--book-room">
+          <select name="room-type" class="select select--room-type">
+            <option value="single room">Single Room</option>
+            <option value="junior suite">Junior Suite</option>
+            <option value="suite">Suite</option>
+            <option value="residential suite">Residential Suite</option>
+          </select>
+          <button class="button button--filter-rooms">Show Rooms</button>
+        </form>
+        <section class="section section--filtered-rooms">
+          <table class="table table--filtered-rooms">
+          </table>
+        </section>
+        <button class="button button--close-bookings">Close</button>
+      </section>
+      <section class="section section--submit-booking">
+        <h2 class="h2 h2--submit-booking">Select Room By Number</h2>
+        <form class="form form--submit-booking">
+          <label for="submit-booking">Room Number</label>
+          <input type="text" name="submit-booking" class="input input--submit-booking">
+          <button class="button button--submit-booking">Book</button>
+        </form>
+      </section>
+    </div>
+    <!-- end modal -->
+    <!-- order food modal -->
+    <div class="div div--ordering-modal">
+      <section class="section section--order-service">
+        <h1 class="h1 h1--book-room">Place Order for Room Service</h1>
+          <table class="table table--order-options">
+          </table>
+        </section>
+        <button class="button button--close-menu">Close</button>
+      </section>
+      <section class="section section--submit-order">
+        <h2 class="h2 h2--submit-order">Enter Food Name</h2>
+        <form class="form form--submit-order">
+          <label for="submit-order">Food</label>
+          <input type="text" name="submit-order" class="input input--submit-order">
+          <button class="button button--submit-order">Order</button>
+          <p class="p p--order-error"></p>
+        </form>
+      </section>
+    </div>
+    <!-- end modal -->
+    <header class="header header--banner">
+      <h1 class="h1 h1--main-header">OverLook Hotel</h1>
+      <h1 class="h1 h1--logo">OL</h1>
+      <h2 class="h2 h2--main-subheader">Denver's Premier Hotel In LoDo</h2>
+    </header>
+    <nav class="nav nav--tabs">
+      <h1 class="h2 h2--welcome">Welcome</h2>
+      <h2 class="h2 h2--selected-customer">Customer: Not Selected</h2>
+      <h3 class="h3 h3--date"></h3>
+      <div class="div div--tabs">
+          <ul class="ul ul--tabs">
+            <li class="li li--main active">Main</li>
+            <li class="li li--orders inactive">Orders</li>
+            <li class="li li--rooms inactive">Rooms</li>
+            <li class="li li--customer inactive">Customer</li>
+          </ul>
+      </div>
+    </nav>
+    <main class="main main--content-display">
+      <section class="section section--main-content">
+        <div class="div div--rooms-available">
+          <h2 class="h2 h2--rooms-available">Rooms Available</h2>
+          <p class="p p--rooms-available"></p>
+        </div>
+        <div class="div div--todays-revenue">
+          <h2 class="h2 h2--todays-revenue">Today's Revenue</h2>
+          <p class="p p--todays-revenue"></p>
+        </div>
+        <div class="div div--percent-occupied">
+          <h2 class="h2 h2--percent-occupied">Percent of Rooms Occupied</h2>
+          <p class="p p--percent-occupied"></p>
+        </div>
+      </section>
+      <section class="section section--orders-content hidden">
+        <div class="div div--general-order-info">
+          <section class="section section--orders-today">
+            <h2 class="h2 h2--orders-today">Today's Orders</h2>
+            <table class="table table--orders-today">
+            </table>
+          </section>
+          <section class="section section--search-orders">
+            <h2 class="h2 h2--orders-today">Search for Orders</h2>
+            <label class="label label--order-search" for="order-search">Search For All Orders By Date</label>
+            <input type="text" name="order-search" placeholder="yyyy/mm/dd" class="input input--order-search">
+            <button class="button button--order-search">Search</button>
+          <p class="p p--order-search-error"></p>
+            <table class="table table--search-orders">
+            </table>
+          </section>
+        </div>
+        <div class="div div--customer-order-info">
+          <section class="section section--customer-all-time-orders">
+            <h2 class="h2 h2--customer-all-time-orders">Order History</h2>
+            <p class="p p--order-history-error"></p>
+            <table class="table table--customer-all-time-orders">
+            </table>
+          </section>
+          <section class="section section--customer-daily-orders">
+            <h2 class="h2 h2--customer-daily-orders">Cost of Orders Today</h2>
+            <p class="p p--customer-daily-cost"></p>
+          </section>
+          <section class="section section--all-time-cost">
+            <h2 class="h2 h2--customer-all-time-cost">Total Cost of All Historical Orders</h2>
+            <p class="p p--customer-all-time-cost"></p>
+          </section>
+        </div>
+      </section>
+      <section class="section section--rooms-content hidden">
+        <div class="div div--general-room-info">
+          <section class="section section--popular-date">
+            <h2 class="h2 h2--popular-date">Most Popular Booking Date</h2>
+            <p class="p p--popular-date"></p>
+          </section>
+          <section class="section section--most-available-date">
+            <h2 class="h2 h2--most-available-date">Most Rooms Available On:</h2>
+            <p class="p p--most-available-date"></p>
+          </section>
+          <section class="section section--room-search">
+            <label class="label label--room-search" for="room-search">Search For Available Rooms By Date</label>
+            <input type="text" name="room-search" placeholder="yyyy/mm/dd" class="input input--room-search">
+            <button class="button button--room-search">Search</button>
+            <table class="table table--room-results">
+            </table>
+            <p class="p p--room-error"></p>
+          </section>
+        </div>
+        <div class="div div--customer-room-info">
+          <section class="section section--customer-room-records">
+            <h2 class="h2 h2--customer-room-records">Customer Booking History</h2>
+            <table class="table table--customer-room-records">
+            </table>
+            <p class="p p--customer-room-error">No User History Exists</p>
+            <button class="button button--book-room">Book New Room</button>
+            <button class="button button--order-service">Order Room Service</button>
+          </section>
+        </div>
+      </section>
+      <section class="section section--customer-content">
+        <div class="div div--customer-search">
+          <h2 class="h2 h2--customer-search">Search for Existing Customer</h2>
+          <form class="form form--search-customer">
+            <label class="label label--search-customer" for="search">User Name</label>
+            <input class="input input--search-customer" type="text" name="search" placeholder="Enter Full Name">
+            <button class="button button--search-customer">Search</button>
+          </form>
+        </div>
+        <div class="div div--new-customer">
+          <h2 class="h2 h2--new-customer">Create New Customer</h2>
+          <form class="form form--create-customer">
+            <label class="label label--create-customer" for="create">User Name</label>
+            <input class="input input--create-customer" type="text" name="create" placeholder="Enter Full Name">
+            <button class="button button--create-customer">Submit</button>
+          </form>
+        </div>
+      </section>
+    </main>
+  <script type="text/javascript" src="main.bundle.js"></script></body>
+</html>
