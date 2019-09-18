@@ -16,8 +16,7 @@ body {
   background-image: url('https://i.imgur.com/dUlTOrH.jpg');
   background-position: center;
   background-size: cover;
-  // display: flex;
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -59,7 +58,6 @@ body {
 }
 
 // Input Modal Styling
-
 .div--modal-background {
   background: grey;
   display: none;
