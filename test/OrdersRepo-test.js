@@ -29,4 +29,14 @@ describe('Orders', () => {
   it('should calculate cost of user services for a given date', () => {
     expect(ordersRepo.calculateUserChargesDate(2, '2019/08/08')).to.equal(7.47);
   });
+
+  it('should be able to create an item list for ordering', () => {
+    ordersRepo.getServiceOptions();
+    expect(ordersRepo.availableItems.length).to.equal(32);
+  })
+
+  it('should be able to place a new order', () => {
+    ordersRepo.placeOrder({ userID: 10, date: "2019/09/01", food: "Rustic Cotton Sandwhich", totalCost: 17.33 });
+    expect(ordersRepo.roomServices.length).to.equal(33);
+  })
 });

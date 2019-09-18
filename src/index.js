@@ -69,6 +69,8 @@ $('.li--main').click(() => {
 $('.li--orders').click(() => {
   let $customerText = $('.h2--selected-customer').text()
   domUpdates.clearElement('.table--orders-today');
+  domUpdates.clearElement('.p--order-history-error')
+  domUpdates.clearElement('.table--customer-all-time-orders')
   if ($customerText === 'Customer: Not Selected') {
     displayGeneralOrderInfo();
   } else {
@@ -129,7 +131,7 @@ function displayCurrentUser(name) {
   currentCustomer = userRepo.findCurrentUser($customerName);
   if (currentCustomer === undefined) {
     toggleError('.p--error-text', 'That customer does not exist. Please search again, or create a new customer.');
-    domUpdates.appendText('.h2--selected-customer', `Customer: Not Selected`);   
+    domUpdates.appendText('.h2--selected-customer', `Customer: Not Selected`);  
   } else {
     domUpdates.appendText('.h2--selected-customer', `Customer: ${currentCustomer.name}; ID: ${currentCustomer.id}`);
   }  
@@ -221,8 +223,10 @@ function checkForBookingToday(bookings) {
   let bookingToday = bookings.filter(booking => booking.date === dateToday);
   if (bookingToday.length === 0) {
     domUpdates.showElement('.button--book-room');
+    domUpdates.hideElement('.button--order-service')
   } else {
     domUpdates.hideElement('.button--book-room');
+    domUpdates.showElement('.button--order-service');
   }
 }
 
@@ -264,20 +268,56 @@ $('.button--submit-booking').click(() => {
   updateBookingArrays(dateToday);
   showBookingSummary();
   closeBookingModal();
+});
+
+$('.button--order-service').click(() => {
+  event.preventDefault();
+  ordersRepo.getServiceOptions();
+  domUpdates.toggleModal('.div--ordering-modal');
+  updateMenuTable(ordersRepo.availableItems, '.table--order-options');
+});
+
+$('.button--submit-order').click(() => {
+  event.preventDefault();
+  let userID = parseInt(currentCustomer.id);
+  let $foodItem = $('.input--submit-order').val();
+  let date = dateToday;
+  let menuItem = ordersRepo.availableItems.filter(item => item.food.toUpperCase() === $foodItem.toUpperCase());
+  if (menuItem.length !== 0) {
+    ordersRepo.placeOrder({ userID: userID, date: date, food: menuItem[0].food, totalCost: menuItem[0].totalCost });
+  } else {
+    domUpdates.appendText('.p--order-error', 'Item is not on the menu. Please Try Again.');
+  }
+});
+
+$('.button--close-menu').click(() => {
+  event.preventDefault();
+  domUpdates.toggleModal('.div--ordering-modal');
 })
 // end room tab
 
 // orders tab
 function displayGeneralOrderInfo() {
   let ordersToday = ordersRepo.getOrdersByDate(dateToday);
-  console.log(ordersToday);
   domUpdates.hideElement('.div--customer-order-info');
   domUpdates.showElement('.div--general-order-info');
   updateOrdersTable(ordersToday, '.table--orders-today');
 }
 
 function displayCustomerOrderInfo() {
-
+  let customerID = currentCustomer.id;
+  let orderHistory = ordersRepo.getOrdersByUser(customerID);
+  let todaysCost = ordersRepo.calculateUserChargesDate(customerID, dateToday);
+  let allTimeCost = ordersRepo.calculateUserChargesAllTime(customerID);
+  domUpdates.showElement('.div--customer-order-info');
+  domUpdates.hideElement('.div--general-order-info');
+  if (orderHistory.length !== 0) {
+    updateOrdersTable(orderHistory, '.table--customer-all-time-orders');
+  } else {
+    domUpdates.appendText('.p--order-history-error', 'History Unavailable for This Customer');
+  }
+  domUpdates.appendText('.p--customer-daily-cost', `$${todaysCost}`);
+  domUpdates.appendText('.p--customer-all-time-cost', `$${allTimeCost}`);
 }
 
 function updateOrdersTable(orders, table) {
@@ -293,15 +333,26 @@ function updateOrdersTable(orders, table) {
     </tr>`, table));
 }
 
+function updateMenuTable(orders, table) {
+  domUpdates.addText(
+    `<th>Food</th>
+    <th>Cost</th>`, table);
+  orders.forEach(order => domUpdates.addText(
+    `<tr class="tr tr--menu">
+    <td>${order.food}</td>
+    <td>${order.totalCost}</td>
+    </tr>`, table));
+}
+
 $('.button--order-search').click(() => {
   event.preventDefault();
   let $date = $('.input--order-search').val();
   let orderData = ordersRepo.getOrdersByDate($date);
   domUpdates.clearElement('.table--search-orders')
-  console.log(orderData);
   if (orderData.length !== 0 && validateDate($date)) {
     updateOrdersTable(orderData, '.table--search-orders');
   } else {
     domUpdates.appendText('.p--order-search-error', 'No Data Available for that Date. Please Check Date Format.');
   }
 })
+// end orders tab

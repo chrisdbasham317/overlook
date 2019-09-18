@@ -53,6 +53,26 @@
       </section>
     </div>
     <!-- end modal -->
+    <!-- order food modal -->
+    <div class="div div--ordering-modal">
+      <section class="section section--order-service">
+        <h1 class="h1 h1--book-room">Place Order for Room Service</h1>
+          <table class="table table--order-options">
+          </table>
+        </section>
+        <button class="button button--close-menu">Close</button>
+      </section>
+      <section class="section section--submit-order">
+        <h2 class="h2 h2--submit-order">Enter Food Name</h2>
+        <form class="form form--submit-order">
+          <label for="submit-order">Food</label>
+          <input type="text" name="submit-order" class="input input--submit-order">
+          <button class="button button--submit-order">Order</button>
+          <p class="p p--order-error"></p>
+        </form>
+      </section>
+    </div>
+    <!-- end modal -->
     <header class="header header--banner">
       <h1 class="h1 h1--main-header">OverLook Hotel</h1>
       <h1 class="h1 h1--logo">OL</h1>
@@ -86,7 +106,7 @@
           <p class="p p--percent-occupied"></p>
         </div>
       </section>
-      <section class="section section--orders-content">
+      <section class="section section--orders-content hidden">
         <div class="div div--general-order-info">
           <section class="section section--orders-today">
             <h2 class="h2 h2--orders-today">Today's Orders</h2>
@@ -104,9 +124,9 @@
           </section>
         </div>
         <div class="div div--customer-order-info">
-          <p class="p p--orders-error"></p>
           <section class="section section--customer-all-time-orders">
             <h2 class="h2 h2--customer-all-time-orders">Order History</h2>
+            <p class="p p--order-history-error"></p>
             <table class="table table--customer-all-time-orders">
             </table>
           </section>
@@ -115,12 +135,12 @@
             <p class="p p--customer-daily-cost"></p>
           </section>
           <section class="section section--all-time-cost">
-            <h2 class="h2 h2--customer-all-time-cost">Order History Total Cost</h2>
+            <h2 class="h2 h2--customer-all-time-cost">Total Cost of All Historical Orders</h2>
             <p class="p p--customer-all-time-cost"></p>
           </section>
         </div>
       </section>
-      <section class="section section--rooms-content">
+      <section class="section section--rooms-content hidden">
         <div class="div div--general-room-info">
           <section class="section section--popular-date">
             <h2 class="h2 h2--popular-date">Most Popular Booking Date</h2>
@@ -146,6 +166,7 @@
             </table>
             <p class="p p--customer-room-error">No User History Exists</p>
             <button class="button button--book-room">Book New Room</button>
+            <button class="button button--order-service">Order Room Service</button>
           </section>
         </div>
       </section>
