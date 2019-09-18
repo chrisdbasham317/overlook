@@ -13,7 +13,7 @@
 - Run npm start
 - Navigate to the local host indicated by the webpack server
 
-or go to the live page at 
+or go to the <a href="https://github.com/chrisdbasham317/overlook.git">Live Page</a>
 
 ## Languages and Libraries
 
