@@ -55,6 +55,7 @@
     <!-- end modal -->
     <header class="header header--banner">
       <h1 class="h1 h1--main-header">OverLook Hotel</h1>
+      <h1 class="h1 h1--logo">OL</h1>
       <h2 class="h2 h2--main-subheader">Denver's Premier Hotel In LoDo</h2>
     </header>
     <nav class="nav nav--tabs">
@@ -86,7 +87,38 @@
         </div>
       </section>
       <section class="section section--orders-content">
-
+        <div class="div div--general-order-info">
+          <section class="section section--orders-today">
+            <h2 class="h2 h2--orders-today">Today's Orders</h2>
+            <table class="table table--orders-today">
+            </table>
+          </section>
+          <section class="section section--search-orders">
+            <h2 class="h2 h2--orders-today">Search for Orders</h2>
+            <label class="label label--order-search" for="order-search">Search For All Orders By Date</label>
+            <input type="text" name="order-search" placeholder="yyyy/mm/dd" class="input input--order-search">
+            <button class="button button--order-search">Search</button>
+          <p class="p p--order-search-error"></p>
+            <table class="table table--search-orders">
+            </table>
+          </section>
+        </div>
+        <div class="div div--customer-order-info">
+          <p class="p p--orders-error"></p>
+          <section class="section section--customer-all-time-orders">
+            <h2 class="h2 h2--customer-all-time-orders">Order History</h2>
+            <table class="table table--customer-all-time-orders">
+            </table>
+          </section>
+          <section class="section section--customer-daily-orders">
+            <h2 class="h2 h2--customer-daily-orders">Cost of Orders Today</h2>
+            <p class="p p--customer-daily-cost"></p>
+          </section>
+          <section class="section section--all-time-cost">
+            <h2 class="h2 h2--customer-all-time-cost">Order History Total Cost</h2>
+            <p class="p p--customer-all-time-cost"></p>
+          </section>
+        </div>
       </section>
       <section class="section section--rooms-content">
         <div class="div div--general-room-info">
@@ -100,7 +132,7 @@
           </section>
           <section class="section section--room-search">
             <label class="label label--room-search" for="room-search">Search For Available Rooms By Date</label>
-            <input type="text" name="room-search" placeholder="yyyy/mm/dd" class="input input--room-search" minlength="11">
+            <input type="text" name="room-search" placeholder="yyyy/mm/dd" class="input input--room-search">
             <button class="button button--room-search">Search</button>
             <table class="table table--room-results">
             </table>
@@ -136,9 +168,5 @@
         </div>
       </section>
     </main>
-
-
-
-    <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   </body>
 </html>

@@ -5,9 +5,11 @@ import roomServices from '../data/Room-services.js';
 
 import BookingRepo from './BookingRepo.js';
 import UserRepo from './UserRepo.js';
+import OrdersRepo from './OrdersRepo.js';
 
 let userRepo 
 let bookingRepo
+let ordersRepo
 let currentCustomer = {};
 const dateToday = `${new Date().getFullYear()}/0${new Date().getMonth() + 1}/${new Date().getDate()}`;
 
@@ -24,6 +26,7 @@ Promise.all([
   .then(data => {
     userRepo = new UserRepo(data[0].users);
     bookingRepo = new BookingRepo(data[1].rooms, data[2].bookings);
+    ordersRepo = new OrdersRepo(data[3].roomServices);
     runStartLogic();
   });
 
@@ -41,11 +44,19 @@ function runStartLogic() {
     updateBookingArrays(dateToday);
     let availableRooms = bookingRepo.availableRooms.length;
     let percentOccupied = bookingRepo.calculatePercentBooked();
-  
+    let bookingRevenue = bookingRepo.calculateRevenue(dateToday);
+    let servicesToday = ordersRepo.getOrdersByDate(dateToday);
+    let servicesRevenue = ordersRepo.calculateCost(servicesToday);
+    let totalRevenue = bookingRevenue + servicesRevenue;
     domUpdates.appendText('.p--rooms-available', `${availableRooms} Vacancies Today`);
     domUpdates.appendText('.p--percent-occupied', `${percentOccupied}`);
+    domUpdates.appendText('.p--todays-revenue', `$${parseFloat(totalRevenue.toFixed(2))}`);
     domUpdates.appendText('.h3--date', `Today's Date: ${dateToday}`);
-  })
+  });
+}
+
+function validateDate(date) {
+  return date.split('').length === 10 ? true : false;
 }
 
 // Tab Control
@@ -56,6 +67,13 @@ $('.li--main').click(() => {
 });
 
 $('.li--orders').click(() => {
+  let $customerText = $('.h2--selected-customer').text()
+  domUpdates.clearElement('.table--orders-today');
+  if ($customerText === 'Customer: Not Selected') {
+    displayGeneralOrderInfo();
+  } else {
+    displayCustomerOrderInfo();
+  }
   domUpdates.toggleTabs($('.li--orders'));
   domUpdates.toggleContent($('.section--orders-content'));
 });
@@ -120,8 +138,8 @@ function displayCurrentUser(name) {
 
 // room tab
 function displayGeneralRoomInfo() {
-  $('.div--general-room-info').show();
-  $('.div--customer-room-info').hide();
+  domUpdates.hideElement('.div--customer-room-info');
+  domUpdates.showElement('.div--general-room-info');
   let popularDate = bookingRepo.findPopularDate();
   let availableDate = bookingRepo.findMostOpenings();
   domUpdates.appendText('.p--popular-date', `${popularDate}`);
@@ -141,16 +159,12 @@ $('.button--room-search').click(() => {
   domUpdates.clearElement('.table--room-results');
   domUpdates.clearElement('.p--room-error');
   let desiredRooms = bookingRepo.availableRooms;
-  if (desiredRooms !== [] && validateDate($date)) {
+  if (desiredRooms.length !== 0 && validateDate($date)) {
     return updateRoomTable(desiredRooms, '.table--room-results');
   } else {
     domUpdates.appendText('.p--room-error', 'Invalid Date');
   }
 });
-
-function validateDate(date) {
-  return date.split('').length === 10 ? true : false;
-}
 
 function updateRoomTable(rooms, table) {
   domUpdates.addText(
@@ -185,8 +199,8 @@ function updateBookingTable(bookings) {
 
 function displayCustomerRoomInfo() {
   domUpdates.clearElement('.table--customer-room-records');
-  $('.div--general-room-info').hide();
-  $('.div--customer-room-info').show();
+  domUpdates.hideElement('.div--general-room-info');
+  domUpdates.showElement('.div--customer-room-info');
   showBookingSummary();
 }
 
@@ -250,6 +264,44 @@ $('.button--submit-booking').click(() => {
   updateBookingArrays(dateToday);
   showBookingSummary();
   closeBookingModal();
-  console.log(bookingRepo.reservedRooms);
 })
 // end room tab
+
+// orders tab
+function displayGeneralOrderInfo() {
+  let ordersToday = ordersRepo.getOrdersByDate(dateToday);
+  console.log(ordersToday);
+  domUpdates.hideElement('.div--customer-order-info');
+  domUpdates.showElement('.div--general-order-info');
+  updateOrdersTable(ordersToday, '.table--orders-today');
+}
+
+function displayCustomerOrderInfo() {
+
+}
+
+function updateOrdersTable(orders, table) {
+  domUpdates.addText(
+    `<th>Customer ID</th>
+    <th>Food</th>
+    <th>Cost</th>`, table);
+  orders.forEach(order => domUpdates.addText(
+    `<tr class="tr tr--orders">
+    <td>${order.userID}</td>
+    <td>${order.food}</td>
+    <td>${order.totalCost}</td>
+    </tr>`, table));
+}
+
+$('.button--order-search').click(() => {
+  event.preventDefault();
+  let $date = $('.input--order-search').val();
+  let orderData = ordersRepo.getOrdersByDate($date);
+  domUpdates.clearElement('.table--search-orders')
+  console.log(orderData);
+  if (orderData.length !== 0 && validateDate($date)) {
+    updateOrdersTable(orderData, '.table--search-orders');
+  } else {
+    domUpdates.appendText('.p--order-search-error', 'No Data Available for that Date. Please Check Date Format.');
+  }
+})
