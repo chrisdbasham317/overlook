@@ -69,6 +69,8 @@ $('.li--main').click(() => {
 $('.li--orders').click(() => {
   let $customerText = $('.h2--selected-customer').text()
   domUpdates.clearElement('.table--orders-today');
+  domUpdates.clearElement
+  domUpdates.clearElement('.table--customer-all-time-orders')
   if ($customerText === 'Customer: Not Selected') {
     displayGeneralOrderInfo();
   } else {
@@ -270,14 +272,22 @@ $('.button--submit-booking').click(() => {
 // orders tab
 function displayGeneralOrderInfo() {
   let ordersToday = ordersRepo.getOrdersByDate(dateToday);
-  console.log(ordersToday);
   domUpdates.hideElement('.div--customer-order-info');
   domUpdates.showElement('.div--general-order-info');
   updateOrdersTable(ordersToday, '.table--orders-today');
 }
 
 function displayCustomerOrderInfo() {
-
+  let customerID = currentCustomer.id;
+  let orderHistory = ordersRepo.getOrdersByUser(customerID);
+  console.log(orderHistory);
+  domUpdates.showElement('.div--customer-order-info');
+  domUpdates.hideElement('.div--general-order-info');
+  if (orderHistory.length !== 0) {
+    updateOrdersTable(orderHistory, '.table--customer-all-time-orders');
+  } else {
+    domUpdates.appendText('.p--order-history-error', 'History Unavailable for This Customer');
+  }
 }
 
 function updateOrdersTable(orders, table) {
@@ -298,7 +308,6 @@ $('.button--order-search').click(() => {
   let $date = $('.input--order-search').val();
   let orderData = ordersRepo.getOrdersByDate($date);
   domUpdates.clearElement('.table--search-orders')
-  console.log(orderData);
   if (orderData.length !== 0 && validateDate($date)) {
     updateOrdersTable(orderData, '.table--search-orders');
   } else {
