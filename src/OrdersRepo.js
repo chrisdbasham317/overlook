@@ -1,6 +1,7 @@
 class OrdersRepo {
   constructor(services) {
     this.roomServices = services;
+    this.availableItems = [];
   }
 
   getOrdersByDate(date) {
@@ -27,6 +28,19 @@ class OrdersRepo {
     let ordersToday = this.getOrdersByUser(id).filter(order => order.date === date);
     let costToday = this.calculateCost(ordersToday);
     return parseFloat(costToday.toFixed(2));
+  }
+
+  getServiceOptions() {
+    let reducedItems = this.roomServices.reduce((acc, item) => {
+      return acc.includes(item.food) ? acc : [...acc, item];
+    }, []);
+    return this.availableItems = reducedItems.map(item => {
+      return { food: item.food, totalCost: item.totalCost }
+    });
+  }
+
+  placeOrder(order) {
+    
   }
 }
 

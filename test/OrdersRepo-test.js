@@ -29,4 +29,9 @@ describe('Orders', () => {
   it('should calculate cost of user services for a given date', () => {
     expect(ordersRepo.calculateUserChargesDate(2, '2019/08/08')).to.equal(7.47);
   });
+
+  it('should be able to create an item list for ordering', () => {
+    ordersRepo.getServiceOptions();
+    expect(ordersRepo.availableItems.length).to.equal(32);
+  })
 });

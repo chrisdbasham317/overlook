@@ -223,8 +223,10 @@ function checkForBookingToday(bookings) {
   let bookingToday = bookings.filter(booking => booking.date === dateToday);
   if (bookingToday.length === 0) {
     domUpdates.showElement('.button--book-room');
+    domUpdates.hideElement('.button--order-service')
   } else {
     domUpdates.hideElement('.button--book-room');
+    domUpdates.showElement('.button--order-service');
   }
 }
 
@@ -266,7 +268,12 @@ $('.button--submit-booking').click(() => {
   updateBookingArrays(dateToday);
   showBookingSummary();
   closeBookingModal();
-})
+});
+
+$('.button--order-service').click(() => {
+  event.preventDefault();
+  
+});
 // end room tab
 
 // orders tab
@@ -317,3 +324,4 @@ $('.button--order-search').click(() => {
     domUpdates.appendText('.p--order-search-error', 'No Data Available for that Date. Please Check Date Format.');
   }
 })
+// end orders tab
